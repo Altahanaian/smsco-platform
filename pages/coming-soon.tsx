@@ -1,68 +1,35 @@
 
-import Head from 'next/head';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'next-i18next';
 
 export default function ComingSoon() {
+  const { locale } = useRouter();
+  const { t } = useTranslation();
+  const [direction, setDirection] = useState<'rtl' | 'ltr'>('ltr');
+
+  useEffect(() => {
+    setDirection(locale === 'ar' ? 'rtl' : 'ltr');
+  }, [locale]);
+
   return (
-    <>
-      <Head>
-        <title>SMSCO | Coming Soon</title>
-        <meta name="description" content="AI-Powered Consulting & Training Platform" />
-      </Head>
-      <div style={{
-        backgroundColor: '#eaf7ee',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        minHeight: '100vh',
-        textAlign: 'center',
-        fontFamily: 'sans-serif',
-        padding: '2rem'
-      }}>
-        <img src="/logo.svg" alt="SMSCO Logo" style={{ width: 100, marginBottom: '1rem' }} />
-        <h1 style={{ fontSize: '2.5rem', color: '#065f46' }}>COMING SOON</h1>
-        <p style={{ fontSize: '1.2rem', marginTop: '1rem' }}>
-          AI-Powered Consulting & Training Platform
-        </p>
-        <p style={{ marginBottom: '2rem' }}>smsco.ai</p>
-        <form action="mailto:info@smsco.ai" method="POST" encType="text/plain">
-          <input type="text" name="name" placeholder="Full Name" required style={{
-            padding: '0.5rem',
-            margin: '0.5rem',
-            width: '250px'
-          }} />
-          <input type="email" name="email" placeholder="Email Address" required style={{
-            padding: '0.5rem',
-            margin: '0.5rem',
-            width: '250px'
-          }} />
-          <select name="serviceType" required style={{
-            padding: '0.5rem',
-            margin: '0.5rem',
-            width: '260px'
-          }}>
-            <option value="">Select Service Type</option>
-            <option value="Company">شركة</option>
-            <option value="Institution">مؤسسة</option>
-            <option value="Office">مكتب</option>
-            <option value="Center">مركز</option>
-            <option value="Academy">معهد</option>
-            <option value="University">جامعة</option>
-          </select>
-          <br />
-          <button type="submit" style={{
-            backgroundColor: '#065f46',
-            color: 'white',
-            padding: '0.6rem 1.5rem',
-            border: 'none',
-            borderRadius: '5px',
-            marginTop: '1rem',
-            cursor: 'pointer'
-          }}>
-            Submit
-          </button>
-        </form>
-      </div>
-    </>
+    <div style={{
+      backgroundImage: 'url("/background.png")',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      textAlign: 'center',
+      direction
+    }}>
+      <Image src="/logo-smsco.png" alt="SMSCO Logo" width={150} height={150} />
+      <h1 style={{ fontSize: '3rem', color: '#014737', marginTop: '1rem' }}>{t('comingSoon')}</h1>
+      <p style={{ fontSize: '1.5rem', color: '#014737' }}>{t('platformTitle')}</p>
+      <h2 style={{ marginTop: '1rem', fontSize: '1.2rem', color: '#014737' }}>{t('website')}</h2>
+    </div>
   );
 }
